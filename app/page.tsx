@@ -1,95 +1,82 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { items } from "@/src/Data/items";
+import { categories } from "@/src/Data/categories";
+import { Category } from "@/src/Types/Category";
+import { Item } from "@/src/Types/Item.1";
+import { getCurrentMonth, filterListByMonth } from "@/src/helpers/dateFilters";
+import { TableA } from "@/src/Components/TableArea";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { InfoArea } from "@/src/Components/InfoArea";
+import { InputArea } from "@/src/Components/InputArea";
+import { ColorMap } from "@/src/Components/ColorMap";
 
-export default function Home() {
+export default function Finance() {
+  const [list, setList] = useState(items);
+  const [filteredList, setFilteredList] = useState<Item[]>([]);
+  const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
+  const [incomes, setIncomes] = useState(0);
+  const [expenses, setExpenses] = useState(0);
+
+  useEffect(() => {
+    setFilteredList(filterListByMonth(list, currentMonth));
+  }, [list, currentMonth]);
+
+  useEffect(() => {
+    let incomeCont = 0;
+    let expenseCont = 0;
+
+    for (let i in filteredList) {
+      if (categories[filteredList[i].category].expense) {
+        expenseCont += filteredList[i].value;
+      } else {
+        incomeCont += filteredList[i].value;
+      }
+    }
+
+    setIncomes(incomeCont);
+    setExpenses(expenseCont);
+  }, [filteredList]);
+
+  const handleMonthChange = (newMonth: string) => {
+    setCurrentMonth(newMonth);
+  };
+
+  const handleAddItem = (item: Item) => {
+    let newList = [...list];
+    newList.push(item);
+    setList(newList);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <Box>
+        <Flex justifyContent={"center"} alignItems={"center"}>
+          <Heading mt="100px" color={"white"}>
+            Controle financeiro
+          </Heading>
+        </Flex>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        <Flex justifyContent={"center"} mt="25px">
+          <InfoArea
+            currentMonth={currentMonth}
+            onMonthChange={handleMonthChange}
+            incomes={incomes}
+            expenses={expenses}
+          />
+        </Flex>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <Flex justifyContent={"center"} mt="5px">
+          <InputArea onAdd={handleAddItem} />
+        </Flex>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        <Flex justifyContent={"center"} mt={"25px"}>
+          <TableA list={filteredList} />
+        </Flex>
+        <Flex justifyContent={"center"} mt="25px">
+          <ColorMap />
+        </Flex>
+      </Box>
+    </>
+  );
 }
