@@ -5,8 +5,6 @@ import {
   Tr,
   Th,
   Tbody,
-  Td,
-  Tfoot,
   Table,
 } from "@chakra-ui/react";
 import React from "react";
@@ -20,11 +18,12 @@ export const TableA = ({ list }: Props) => {
   return (
     <>
       <TableContainer
-        w={"900px"}
+        maxW={"900px"}
         boxShadow="base"
         p="6"
         rounded="md"
         bg="white"
+        w={'90vw'}
       >
         <Table variant="striped" colorScheme="teal">
           <TableCaption>Receitas/Despesas</TableCaption>

@@ -32,33 +32,55 @@ export const InfoArea = ({
 
   return (
     <>
-      <Box w={"900px"} boxShadow="base" p="6" rounded="md" bg="white">
-        <Flex alignItems={"center"}>
-          <Flex w={"30%"}>
-            <Box
+      <Flex
+        maxW={"900px"}
+        h={"auto"}
+        w={"90%"}
+        boxShadow="base"
+        p="6"
+        rounded="md"
+        bg="white"
+        justifyContent={"center"}
+      >
+        <Flex
+          alignItems={"center"}
+          display={{
+            xl: "flex",
+            lg: "flex",
+            md: "flex",
+            sm: "flex",
+            base: "box",
+          }}
+          w={"90vw"}
+        >
+          <Flex
+            maxW={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            marginBottom={"10px"}
+          >
+            <Flex
               cursor={"pointer"}
               fontSize={"25px"}
-              textAlign={"center"}
               onClick={handlePrevMonth}
             >
               <BiSolidLeftArrow />
-            </Box>
+            </Flex>
 
-            <Text textAlign={"center"} w={"150px"}>
+            <Text textAlign={"center"} fontWeight={"bold"} w={"150px"}>
               {formatCurrentMonth(currentMonth)}
             </Text>
 
-            <Box
+            <Flex
               cursor={"pointer"}
               fontSize={"25px"}
-              textAlign={"center"}
               onClick={handleNextMonth}
             >
               <BiSolidRightArrow />
-            </Box>
+            </Flex>
           </Flex>
 
-          <Flex w={"70%"} justifyContent={"center"}>
+          <Flex w={"70%"}>
             <ResumeItem title={"Receitas"} value={incomes} />
             <ResumeItem title={"Despesas"} value={expenses} />
             <ResumeItem
@@ -68,7 +90,7 @@ export const InfoArea = ({
             />
           </Flex>
         </Flex>
-      </Box>
+      </Flex>
     </>
   );
 };

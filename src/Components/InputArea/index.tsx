@@ -6,6 +6,8 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Grid,
+  GridItem,
   Input,
   Select,
 } from "@chakra-ui/react";
@@ -61,59 +63,82 @@ export const InputArea = ({ onAdd }: Props) => {
   };
   return (
     <>
-      <Box w={"900px"} boxShadow="base" p="6" rounded="md" bg="white">
-        <Flex justifyContent={"center"}>
-          <Box>
-            <FormLabel>Date</FormLabel>
-            <Input
-              type="date"
-              value={dateField}
-              onChange={(e) => setDateField(e.target.value)}
-              w={"180px"}
-            />
-          </Box>
-          <Box ml={"5px"}>
-            <FormLabel>Categoria</FormLabel>
-            <Select
-              value={categoryField}
-              onChange={(e) => setCategoryField(e.target.value)}
-              w={"200px"}
-            >
-              <>
-                <option></option>
-                {categoryKeys.map((key, index) => (
-                  <option key={index} value={key}>
-                    {categories[key].title}
-                  </option>
-                ))}
-              </>
-            </Select>
-          </Box>
-          <Box ml={"5px"}>
-            <FormLabel>Titulo</FormLabel>
-            <Input
-              type="text"
-              value={titleField}
-              onChange={(e) => setTitleField(e.target.value)}
-              w={"200px"}
-            />
-          </Box>
-          <Box ml={"5px"}>
-            <FormLabel>Valor</FormLabel>
-            <Input
-              type="number"
-              value={valueField}
-              onChange={(e) => setValueField(parseFloat(e.target.value))}
-              w={"100px"}
-            />
-          </Box>
-          <Flex align={"end"} ml={"5px"}>
-            <Button colorScheme="teal" onClick={handleAddEvent}>
-              Adicionar
-            </Button>
-          </Flex>
+      <Flex
+        maxW={"900px"}
+        w={"90%"}
+        boxShadow="base"
+        p="6"
+        rounded="md"
+        bg="white"
+        justifyContent={"center"}
+      >
+        <Flex justifyContent={"center"} w={"90vw"}>
+          <Grid
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              xl: "repeat(5, 1fr)",
+              lg: "repeat(5, 1fr)",
+              md: "repeat(3, 1fr)",
+              sm: "repeat(2, 1fr)",
+            }}
+            gap={2}
+          >
+            <GridItem>
+              <FormLabel>Date</FormLabel>
+              <Input
+                type="date"
+                value={dateField}
+                onChange={(e) => setDateField(e.target.value)}
+                w={"180px"}
+              />
+            </GridItem>
+            <GridItem ml={"5px"}>
+              <FormLabel>Categoria</FormLabel>
+              <Select
+                value={categoryField}
+                onChange={(e) => setCategoryField(e.target.value)}
+                w={"200px"}
+              >
+                <>
+                  <option></option>
+                  {categoryKeys.map((key, index) => (
+                    <option key={index} value={key}>
+                      {categories[key].title}
+                    </option>
+                  ))}
+                </>
+              </Select>
+            </GridItem>
+            <GridItem ml={"5px"}>
+              <FormLabel>Titulo</FormLabel>
+              <Input
+                type="text"
+                value={titleField}
+                onChange={(e) => setTitleField(e.target.value)}
+                w={"200px"}
+              />
+            </GridItem>
+            <GridItem ml={"5px"}>
+              <Flex>
+                <Box>
+                  <FormLabel>Valor</FormLabel>
+                  <Input
+                    type="number"
+                    value={valueField}
+                    onChange={(e) => setValueField(parseFloat(e.target.value))}
+                    w={"100px"}
+                  />
+                </Box>
+                <Flex alignItems={"end"} ml="8px">
+                  <Button colorScheme="teal" onClick={handleAddEvent}>
+                    Adicionar
+                  </Button>
+                </Flex>
+              </Flex>
+            </GridItem>
+          </Grid>
         </Flex>
-      </Box>
+      </Flex>
     </>
   );
 };

@@ -52,7 +52,7 @@ export default function Finance() {
     <>
       <Box>
         <Flex justifyContent={"center"} alignItems={"center"}>
-          <Heading mt="100px" color={"white"}>
+          <Heading mt="10vh" color={"white"}>
             Controle financeiro
           </Heading>
         </Flex>
@@ -69,7 +69,7 @@ export default function Finance() {
         <Flex justifyContent={"center"} mt="5px">
           <InputArea onAdd={handleAddItem} />
         </Flex>
-
+        
         <Flex justifyContent={"center"} mt={"25px"}>
           <TableA list={filteredList} />
         </Flex>

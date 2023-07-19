@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Box bg={'teal.500'} p={"0px 0px 250px"}>{children}</Box>
+          <Box bg={'teal.500'} w='100vw' p={"0px 0px 250px"}>{children}</Box>
         </Providers>
       </body>
     </html>
